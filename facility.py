@@ -114,9 +114,11 @@ class SaltFacility(GenericObservationFacility):
 
     def get_form(self, observation_type):
         if observation_type == 'GRB':
+            # GRB follow-ups
             return SaltFacilityGrbForm
         else:
-            return SaltFacilityBaseForm
+            # by default, always show the GRB form
+            return SaltFacilityGrbForm
 
     def get_observation_status(self, observation_id):
         return ['IN_PROGRESS']
