@@ -9,7 +9,7 @@ Quick start
 1. Create a new TOM following the instructions at 
    https://tom-toolkit.readthedocs.io/en/latest/introduction/getting_started.html
    
-2. Clone this repository into the TOM's base directors: 
+2. Clone this repository into the TOM's base directory: 
 
 ```
 git clone https://github.com/thusser/saltofi.git
