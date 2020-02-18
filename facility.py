@@ -1,7 +1,6 @@
 import base64
 import io
-import json
-import mimetypes
+
 import os
 import random
 import string
@@ -9,12 +8,12 @@ import time
 import uuid
 import zipfile
 from datetime import datetime
-
 import requests
 import xmltodict
 import typing
 from astropy.coordinates import SkyCoord
 import astropy.units as u
+from astropy.time import Time, TimeDelta
 from django import forms
 from tom_observations.facility import GenericObservationForm, GenericObservationFacility
 from tom_targets.models import Target
@@ -56,6 +55,21 @@ class SaltFacilityBaseForm(GenericObservationForm):
         block.year = year
         block.semester = semester
 
+    @staticmethod
+    def _set_expiry_date(block: Block, hours: float):
+        """Updates block and adds an expiry date.
+
+        Args:
+            block: The block to update.
+            hours: Number of hours in the future for the expiry date.
+        """
+
+        # calculate expiry date
+        expires = Time.now() + TimeDelta(hours * u.hour)
+
+        # set it
+        block.expiry_date = expires
+
 
 class SaltFacilityGrbForm(SaltFacilityBaseForm):
     """Form for following up GRBs, based on template grb.xml"""
@@ -73,10 +87,12 @@ class SaltFacilityGrbForm(SaltFacilityBaseForm):
 
         # set code and comment
         block.code = str(uuid.uuid4())
+        block.name = target.name + ' ' + Time.now().isot
         block.comment = target.name
 
-        # update semester
+        # update semester and set expiry date
         self._set_current_semester(block)
+        self._set_expiry_date(block, 24)
 
         # set target
         block.targets[0].name = target.name

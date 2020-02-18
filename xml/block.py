@@ -1,6 +1,8 @@
 import typing
 from xml.etree import ElementTree as ET
 
+from astropy.time import Time
+
 from .element import Element
 from .pointing import Pointing
 from .target import Target
@@ -15,6 +17,7 @@ class Block(Element):
     COMMENTS = './{/PIPT/Proposal/Phase2}BlockSemester/{/PIPT/Proposal/Phase2}Comments'
     YEAR = './{/PIPT/Proposal/Phase2}BlockSemester/{/PIPT/Proposal/Phase2}Year'
     SEMESTER = './{/PIPT/Proposal/Phase2}BlockSemester/{/PIPT/Proposal/Phase2}Semester'
+    EXPIRYDATE = './{/PIPT/Proposal/Phase2}ExpiryDate'
 
     @property
     def name(self) -> str:
@@ -132,6 +135,23 @@ class Block(Element):
                 '/{/PIPT/Proposal/Phase2}Acquisition' \
                 '/{/PIPT/Proposal/Shared}Target' .format(**self.namespaces)
         return [Target(t) for t in self.root.findall(xpath)]
+
+    @property
+    def expiry_date(self) -> typing.Union[Time, None]:
+        """Returns the expiry date of this block, if any."""
+        return Time(self.get(Block.EXPIRYDATE))
+
+    @expiry_date.setter
+    def expiry_date(self, v: typing.Union[Time, None]):
+        """Sets the expiry date.
+
+        Args:
+            v: New expiry date.
+        """
+        if v is None:
+            self.set(Block.EXPIRYDATE, None)
+        elif isinstance(v, Time):
+            self.set(Block.EXPIRYDATE, v.isot)
 
 
 __all__ = ['Block']

@@ -9,6 +9,7 @@
     <ns1:Priority>0</ns1:Priority>
     <ns1:Ranking>High</ns1:Ranking>
   </ns1:BlockSemester>
+  <ns1:ExpiryDate>2020-02-21T12:21:11.270Z</ns1:ExpiryDate>
   <ns1:BlockType>Science</ns1:BlockType>
   <ns1:Charged>true</ns1:Charged>
   <ns1:Transparency>Thin cloud</ns1:Transparency>
