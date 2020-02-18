@@ -11,27 +11,32 @@ Quick start
    
 2. Clone this repository into the TOM's base directors: 
 
-    git clone https://github.com/thusser/saltofi.git
+```
+git clone https://github.com/thusser/saltofi.git
+```
 
 3. In the TOM's settings.py add the app:
 
-    TOM_FACILITY_CLASSES = [
-        [...],
-        'saltofi.facility.SaltFacility'
-    ]
+```
+TOM_FACILITY_CLASSES = [
+    [...],
+    'saltofi.facility.SaltFacility'
+]
+```
     
 4. And add the SALT OFI's settings to the same file (you can also put username/password in here directly):
 
-    FACILITIES = {
-        [...]
-        'SALT': {
-            'portal_url': 'http://www.saao.ac.za/wm/webservices/',
-            'username': os.environ.get('SALT_USERNAME'),
-            'password': os.environ.get('SALT_PASSWORD'),
-            'proposal_code': '<some_proposal_code>'
-        }
+```
+FACILITIES = {
+    [...]
+    'SALT': {
+        'portal_url': 'http://www.saao.ac.za/wm/webservices/',
+        'username': os.environ.get('SALT_USERNAME'),
+        'password': os.environ.get('SALT_PASSWORD'),
+        'proposal_code': '<some_proposal_code>'
     }
-    
+}
+```    
     
 Adding new templates
 --------------------
